@@ -9,6 +9,7 @@ vcpkg_from_gitlab(
     HEAD_REF master
     PATCHES
         FindCMath.patch
+        fix-arm64-linux-static-build.patch
 )
 
 vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS

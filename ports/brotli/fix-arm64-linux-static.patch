@@ -1,0 +1,20 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 2904679..41ef5dd 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -197,8 +197,13 @@ foreach(lib IN LISTS BROTLI_SHARED_LIBS BROTLI_STATIC_LIBS)
+ endforeach()
+ 
+ if(NOT BROTLI_EMSCRIPTEN)
+-target_link_libraries(brotlidec brotlicommon)
+-target_link_libraries(brotlienc brotlicommon)
++  if(${VCPKG_TARGET_TRIPLET} STREQUAL "arm64-linux-static")
++    target_link_libraries(brotlidec brotlicommon-static)
++    target_link_libraries(brotlienc brotlicommon-static)
++  else()
++    target_link_libraries(brotlidec brotlicommon)
++    target_link_libraries(brotlienc brotlicommon)
++  endif()
+ endif()
+ 
+ target_link_libraries(brotlidec-static brotlicommon-static)
