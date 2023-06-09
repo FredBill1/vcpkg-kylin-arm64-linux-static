@@ -183,6 +183,14 @@ else()
     else()
         set(TARGET_ALIAS "")
     endif()
+    message(STATUS "#####VCPKG_TARGET_TRIPLET: ${VCPKG_LIBRARY_LINKAGE}")
+    message(STATUS "#####VCPKG_CRT_LINKAGE: ${VCPKG_CRT_LINKAGE}")
+    if((VCPKG_LIBRARY_LINKAGE STREQUAL "static") AND (VCPKG_CRT_LINKAGE STREQUAL "static"))
+        set(DISABLE_SHARED_FLAG "--disable-shared")
+    else()
+        set(DISABLE_SHARED_FLAG "")
+    endif()
+    message(STATUS "#####DISABLE_SHARED_FLAG: ${DISABLE_SHARED_FLAG}")
     vcpkg_configure_make(
         SOURCE_PATH "${SOURCE_PATH}"
         AUTOCONFIG
@@ -193,6 +201,7 @@ else()
             ${GCP_OPTION}
             ${GEOCALLBACKS_OPTION}
             ${RTTOPO_OPTION}
+            ${DISABLE_SHARED_FLAG}
             "--disable-examples"
             "--disable-minizip"
         OPTIONS_DEBUG
